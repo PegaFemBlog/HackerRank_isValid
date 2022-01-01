@@ -1,0 +1,54 @@
+import java.util.*;
+
+public class Practice {
+
+
+        public static String isValid (String str) {
+
+            Map<Character, Integer> charFreqMap = new HashMap<>();
+            //iter through string
+            for (int i = 0; i<str.length(); i++){
+                char c = str.charAt(i);
+                //key is char c, value default to 0
+                int freq = charFreqMap.getOrDefault(c, 0);
+                //add char c and increase count
+                charFreqMap.put(c, freq++);
+            }
+
+            //create an int array the same size of the map
+            int[] arr = new int[charFreqMap.size()];
+            int idx = 0;
+            for (Map.Entry<Character,Integer> charIntEntry : charFreqMap.entrySet()){
+                arr[idx++] = charIntEntry.getValue();
+            }
+            Arrays.sort(arr);
+
+            if (charFreqMap.size()==1) return "YES";
+
+            int first = arr[0];
+            int second = arr[1];
+            int secondLast = arr[arr.length - 2];
+            int last = arr[arr.length - 1];
+
+            //are first and last values the same
+            if (first == last) return "YES";
+
+            //is first 1 and all others have same freq
+            if (first == 1 && second == last) return "YES";
+
+            //if all freq are the same and last has 1 extra
+            if(first == second && second == secondLast && secondLast==(last-1)) return "YES";
+
+            return "NO";
+
+        }
+
+
+
+
+    public static void main(String[] args) {
+            String str = "abbcd";
+        isValid(str);
+    }
+
+}
